@@ -1,0 +1,109 @@
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, var(--black) 100%);
+  z-index: 0;
+}
+
+.home h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: glow 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.home form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--yellow);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.home form:hover {
+  transform: translateY(-5px);
+}
+
+.home input {
+  padding: 1rem;
+  border: 2px solid var(--yellow);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--yellow);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.home input:focus {
+  outline: none;
+  border-color: var(--yellow-light);
+  box-shadow: 0 0 15px var(--yellow);
+}
+
+.home button {
+  padding: 1rem;
+  background: var(--yellow);
+  color: var(--black);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.home button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.home button:hover {
+  background: var(--yellow-light);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.home button:hover::before {
+  left: 100%;
+} 

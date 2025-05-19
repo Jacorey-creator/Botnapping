@@ -1,0 +1,19 @@
+:root {
+  --yellow: #FFD700;
+  --yellow-light: #FFE44D;
+  --black: #000000;
+  --black-dark: #111111;
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--black) 0%, var(--black-dark) 100%);
+  color: var(--yellow);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 10px var(--yellow); }
+  50% { text-shadow: 0 0 20px var(--yellow), 0 0 30px var(--yellow-light); }
+  100% { text-shadow: 0 0 10px var(--yellow); }
+} 
