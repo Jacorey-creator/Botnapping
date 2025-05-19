@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Quiz, { Question } from './Quiz'
 import styles from '../styles/CluePage.module.css'
@@ -71,7 +70,7 @@ const clues: Record<string, Clue> = {
         correctAnswer: 3
       }
     ],
-    finalClue: (score) => `A professor might know who NullByte is…`
+    finalClue: () => `A professor might know who NullByte is…`
   }
 }
 
@@ -100,9 +99,9 @@ const CluePage = () => {
   }
 
   return (
-    <div className={styles['clue-page']}>
+    <div className={styles.cluePage}>
       <h1>{clue.title}</h1>
-      <div className={styles['media-container']}>
+      <div className={styles.mediaContainer}>
         {clue.type === 'image' ? (
           <img src={clue.content} alt={clue.title} />
         ) : (

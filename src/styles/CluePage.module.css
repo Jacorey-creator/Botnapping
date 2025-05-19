@@ -1,16 +1,16 @@
-.clue-page {
+.cluePage {
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
 
-.media-container {
+.mediaContainer {
   margin: 2rem 0;
 }
 
-.media-container img,
-.media-container video {
+.mediaContainer img,
+.mediaContainer video {
   max-width: 100%;
   border: 3px solid #ffd700;
   border-radius: 8px;
