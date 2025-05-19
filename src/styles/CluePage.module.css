@@ -1,105 +1,31 @@
 .clue-page {
-  min-height: 100vh;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.clue-page::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, transparent 0%, var(--black) 100%);
-  z-index: 0;
-}
-
-.clue-page h1 {
-  font-size: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
   text-align: center;
-  animation: glow 2s ease-in-out infinite;
-  position: relative;
-  z-index: 1;
-}
-
-.clue-page p {
-  color: #FFD700;
-  text-align: center;
-  max-width: 600px;
 }
 
 .media-container {
-  width: 100%;
-  max-width: 800px;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 1rem;
-  border: 1px solid var(--yellow);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
-}
-
-.media-container:hover {
-  transform: scale(1.02);
+  margin: 2rem 0;
 }
 
 .media-container img,
 .media-container video {
-  width: 100%;
-  height: auto;
-  display: block;
+  max-width: 100%;
+  border: 3px solid #ffd700;
   border-radius: 8px;
 }
 
-.clue-page button {
-  padding: 1rem 2rem;
-  background: var(--yellow);
-  color: var(--black);
+button {
+  background-color: #ffd700;
+  color: #000;
   border: none;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
 }
 
-.clue-page button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.clue-page button:hover {
-  background: var(--yellow-light);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-}
-
-.clue-page button:hover::before {
-  left: 100%;
+button:hover {
+  background-color: #ffed4a;
 } 
