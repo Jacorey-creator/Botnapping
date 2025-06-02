@@ -2,9 +2,15 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Quiz, { Question } from './Quiz'
 import styles from '../styles/CluePage.module.css'
 
-type MediaClue = {
+type MediaItem = {
   type: 'image' | 'video'
   content: string
+  title: string
+}
+
+type MediaClue = {
+  type: 'media'
+  items: MediaItem[]
   title: string
 }
 
@@ -19,33 +25,33 @@ type Clue = MediaClue | QuizClue
 
 const clues: Record<string, Clue> = {
   '1': { 
-    type: 'image', 
-    content: '/clues/BossRushClicker_002.png', 
-    title: 'First Clue' 
+    type: 'media',
+    title: 'First Clue',
+    items: [
+      { type: 'video', content: '/clues/2025-04-14 13-28-42 - Copy.mp4', title: 'Video Clue' },
+    ],
   },
   '2': { 
-    type: 'quiz', 
-    title: 'Math Challenge',
-    questions: [
-      {
-        question: "What is 2 + 2?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: 1
-      },
-      {
-        question: "What is 5 × 5?",
-        options: ["20", "25", "30", "35"],
-        correctAnswer: 1
-      },
-      {
-        question: "What is 10 ÷ 2?",
-        options: ["3", "4", "5", "6"],
-        correctAnswer: 2
-      }
-    ],
-    finalClue: (score) => `Look for the yellow door with the number ${score + 1}`
+    type: 'media',
+    title: 'Second Clue',
+    items: [
+      { type: 'image', content: '/clues/20250522_174016.jpg', title: 'Image Clue' },
+    ]
   },
   '3': { 
+    type: 'quiz', 
+    title: 'Pop Quiz',
+    questions: [
+      {
+        question: `So, after we summon these plastic masterpieces from the printer gods… 
+        where do the drama llamas go to film their magic?`,
+        options: ["The Snack Hall of Eternal Grazing", "The Casting Room of Twitching Chaos","The Closet of Forgotten Props"],
+        correctAnswer: 1
+      }
+    ],
+    finalClue: () => `NullByte's  voice echoes… through old Twitch broadcasts`
+  },
+  '4': { 
     type: 'quiz',
     title: 'Pop Quiz',
     questions: [
@@ -71,6 +77,14 @@ const clues: Record<string, Clue> = {
       }
     ],
     finalClue: () => `A professor might know who NullByte is…`
+  },
+  '5': {
+    type: 'media',
+    title: 'Third Clue',
+    items: [
+      { type: 'video', content: '', title: 'Video Clue' },
+      { type: 'image', content: '/clues/20250522_173022.jpg', title: `Cybert was last seen… coaching.\n He’s smarter than he looks` },
+    ]
   }
 }
 
@@ -91,7 +105,6 @@ const CluePage = () => {
         title={clue.title}
         finalClue={clue.finalClue}
         onComplete={(score) => {
-          // You could store the score or do something with it here
           console.log(`Quiz completed with score: ${score}`)
         }}
       />
@@ -102,14 +115,24 @@ const CluePage = () => {
     <div className={styles.cluePage}>
       <h1>{clue.title}</h1>
       <div className={styles.mediaContainer}>
-        {clue.type === 'image' ? (
-          <img src={clue.content} alt={clue.title} />
-        ) : (
-          <video controls>
-            <source src={clue.content} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )}
+        {clue.items.map((item, index) => (
+          <div key={index} className={styles.mediaItem}>
+            <h3>{item.title}</h3>
+            {item.type === 'image' ? (
+              <img src={item.content} alt={item.title} />
+            ) : (
+              <video 
+                controls
+                playsInline
+                preload="metadata"
+                className={styles.video}
+              >
+                <source src={item.content} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+          </div>
+        ))}
       </div>
       <button onClick={() => navigate('/')}>Back to Password Entry</button>
     </div>

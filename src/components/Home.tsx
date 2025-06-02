@@ -7,6 +7,8 @@ const validPasswords = {
   'clue1': '1',
   'clue2': '2',
   'clue3': '3',
+  'clue4': '4',
+  'clue5': '5',
 }
 
 const Home = () => {
