@@ -9,6 +9,15 @@ const validPasswords = {
   'clue3': '3',
   'clue4': '4',
   'clue5': '5',
+  'clue6': '6',
+  'clue7': '7',
+  'clue8': '8',
+  'clue9': '9',
+  'clue10': '10',
+  'clue11': '11',
+  'clue12': '12',
+  'clue13': '13',
+  'win': 'victory'
 }
 
 const Home = () => {
@@ -17,9 +26,13 @@ const Home = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const clueId = validPasswords[password as keyof typeof validPasswords]
-    if (clueId) {
-      navigate(`/clue/${clueId}`)
+    const destination = validPasswords[password as keyof typeof validPasswords]
+    if (destination) {
+      if (destination === 'victory') {
+        navigate('/victory')
+      } else {
+        navigate(`/clue/${destination}`)
+      }
     } else {
       alert('Invalid password!')
     }

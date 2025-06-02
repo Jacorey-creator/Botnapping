@@ -83,9 +83,74 @@ const clues: Record<string, Clue> = {
     title: 'Third Clue',
     items: [
       { type: 'video', content: '', title: 'Video Clue' },
-      { type: 'image', content: '/clues/20250522_173022.jpg', title: `Cybert was last seen… coaching.\n He’s smarter than he looks` },
+      { type: 'image', content: '/clues/20250522_173022.jpg', title: `Cybert was last seen… coaching.\n He's smarter than he looks` },
+    ]
+  },
+  '6': {
+    type: 'quiz',
+    title: 'Pop Quiz',
+    questions: [
+      {
+        question: `You're ready to put your studying to the test, but it’s not here you'll show it. 
+        Head out the door and find a place where silence is golden`,
+        options: ["Commons", "Study Room", "Neumont Market", "Testing Center", "Neumont South"],
+        correctAnswer: 3
+      }
+    ],
+    finalClue: () => `Cybert always tested his systems in this room.`
+  },
+  '7': {
+    type: 'media',
+    title: 'Fourth Clue',
+    items: [
+      { type: 'image', content: '/clues/20250522_173625.jpg', title: 'He left “paw” prints… on the lounge rug.' },
+    ]
+  },
+  '8': {
+    type: 'media',
+    title: 'Pipes Clue',
+    items: [
+      { type: 'video', content: '', title: 'Video Clue' },
+    ]
+  },
+  '9': {
+    type: 'media',
+    title: ' Clue',
+    items: [
+      { type: 'video', content: '', title: '3rd Video' },
+    ]
+  },
+  '10': {
+    type: 'media',
+    title: ' Clue',
+    items: [
+      { type: 'image', content: '/clues/20250522_180058.jpg', title: 'Hiding in plain sight' },
+      { type: 'image', content: '/clues/20250522_180326.jpg', title: 'Teaching' },
+    ]
+  },
+  '11': {
+    type: 'media',
+    title: 'Clue',
+    items: [
+      { type: 'image', content: '/clues/20250522_175450.jpg', title: 'Who did it better? ' },
+      { type: 'image', content: '/clues/20250522_180712.jpg', title: ' He just cant escape!' },
+    ]
+  },
+  '12': {
+    type: 'media',
+    title: 'Clue',
+    items: [
+      { type: 'video', content: '', title: '4th Video' },
+    ]
+  },
+  '13': {
+    type: 'media',
+    title: 'Clue',
+    items: [
+      { type: 'video', content: '', title: 'Study Room 5th Video' },
     ]
   }
+  
 }
 
 const CluePage = () => {

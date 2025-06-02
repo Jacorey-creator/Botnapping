@@ -1,0 +1,77 @@
+.victoryContainer {
+  display: flex;
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.videoSection {
+  flex: 2;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spinIn 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.victoryVideo {
+  width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.textSection {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #2a2a2a;
+  border-left: 1px solid #3a3a3a;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scaleY(1);
+    color: #4CAF50;
+    text-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+  }
+  50% {
+    transform: scaleY(1.4);
+    color: #00FF00;
+    text-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+  }
+  100% {
+    transform: scaleY(1);
+    color: #4CAF50;
+    text-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+  }
+}
+
+@keyframes spinIn {
+  0% {
+    transform: rotate(-180deg) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.textSection h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #4CAF50;
+  text-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+  animation: pulse 1.5s ease-in-out infinite;
+  font-weight: bold;
+}
+
+.textSection p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #e0e0e0;
+} 
