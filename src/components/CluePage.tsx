@@ -28,7 +28,7 @@ const clues: Record<string, Clue> = {
     type: 'media',
     title: 'First Clue',
     items: [
-      { type: 'video', content: '/clues/2025-04-14 13-28-42 - Copy.mp4', title: 'Video Clue' },
+      { type: 'video', content: '/clues/Vid1.mp4', title: 'Video 1' },
     ],
   },
   '2': { 
@@ -82,7 +82,7 @@ const clues: Record<string, Clue> = {
     type: 'media',
     title: 'Third Clue',
     items: [
-      { type: 'video', content: '', title: 'Video Clue' },
+      { type: 'video', content: '/clues/Vid2.mp4', title: 'Video 2' },
       { type: 'image', content: '/clues/20250522_173022.jpg', title: `Cybert was last seen… coaching.\n He's smarter than he looks` },
     ]
   },
@@ -91,7 +91,7 @@ const clues: Record<string, Clue> = {
     title: 'Pop Quiz',
     questions: [
       {
-        question: `You're ready to put your studying to the test, but it’s not here you'll show it. 
+        question: `You're ready to put your studying to the test, but it's not here you'll show it. 
         Head out the door and find a place where silence is golden`,
         options: ["Commons", "Study Room", "Neumont Market", "Testing Center", "Neumont South"],
         correctAnswer: 3
@@ -103,21 +103,21 @@ const clues: Record<string, Clue> = {
     type: 'media',
     title: 'Fourth Clue',
     items: [
-      { type: 'image', content: '/clues/20250522_173625.jpg', title: 'He left “paw” prints… on the lounge rug.' },
+      { type: 'image', content: '/clues/20250522_173625.jpg', title: 'He left "paw" prints… on the lounge rug.' },
     ]
   },
   '8': {
     type: 'media',
     title: 'Pipes Clue',
     items: [
-      { type: 'video', content: '', title: 'Video Clue' },
+      { type: 'video', content: '', title: 'Temp' },
     ]
   },
   '9': {
     type: 'media',
     title: ' Clue',
     items: [
-      { type: 'video', content: '', title: '3rd Video' },
+      { type: 'video', content: '/clues/Vid3.mp4', title: 'Video 3' },
     ]
   },
   '10': {
@@ -140,14 +140,14 @@ const clues: Record<string, Clue> = {
     type: 'media',
     title: 'Clue',
     items: [
-      { type: 'video', content: '', title: '4th Video' },
+      { type: 'video', content: '/clues/Vid4.mp4', title: 'Video 4' },
     ]
   },
   '13': {
     type: 'media',
     title: 'Clue',
     items: [
-      { type: 'video', content: '', title: 'Study Room 5th Video' },
+      { type: 'video', content: '', title: 'Temp' },
     ]
   }
   
@@ -161,6 +161,10 @@ const CluePage = () => {
   if (!clue) {
     navigate('/')
     return null
+  }
+
+  const handleVideoEnd = () => {
+    navigate('/')
   }
 
   if (clue.type === 'quiz') {
@@ -191,6 +195,7 @@ const CluePage = () => {
                 playsInline
                 preload="metadata"
                 className={styles.video}
+                onEnded={handleVideoEnd}
               >
                 <source src={item.content} type="video/mp4" />
                 Your browser does not support the video tag.
