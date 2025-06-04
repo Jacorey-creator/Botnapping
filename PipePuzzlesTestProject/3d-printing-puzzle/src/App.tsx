@@ -5,19 +5,20 @@ import styled from 'styled-components';
 type PipeType = 'straight' | 'elbow' | 'cross' | 'start' | 'end';
 type Rotation = 0 | 90 | 180 | 270;
 
+type PipeConnections = {
+  top: boolean;
+  right: boolean;
+  bottom: boolean;
+  left: boolean;
+};
+
 interface PipePiece {
   type: PipeType;
   rotation: Rotation;
-  connections: {
-    top: boolean;
-    right: boolean;
-    bottom: boolean;
-    left: boolean;
-  };
 }
 
 // Define the connections for each pipe type
-const PIPE_CONNECTIONS: Record<PipeType, PipePiece['connections']> = {
+const PIPE_CONNECTIONS: Record<PipeType, PipeConnections> = {
   straight: { top: true, right: false, bottom: true, left: false },
   elbow: { top: true, right: true, bottom: false, left: false },
   cross: { top: true, right: true, bottom: true, left: true },
@@ -26,19 +27,109 @@ const PIPE_CONNECTIONS: Record<PipeType, PipePiece['connections']> = {
 };
 
 // Helper function to rotate connections
-const rotateConnections = (connections: PipePiece['connections'], rotation: Rotation): PipePiece['connections'] => {
-  const { top, right, bottom, left } = connections;
-  switch (rotation) {
-    case 90:
-      return { top: left, right: top, bottom: right, left: bottom };
-    case 180:
-      return { top: bottom, right: left, bottom: top, left: right };
-    case 270:
-      return { top: right, right: bottom, bottom: left, left: top };
-    default:
-      return connections;
-  }
+const rotateConnections = (connections: PipeConnections, rotation: Rotation): PipeConnections => {
+  // Convert connections to array: [top, right, bottom, left]
+  const dirs = ['top', 'right', 'bottom', 'left'] as const;
+  const arr = dirs.map(dir => connections[dir]);
+  const steps = (rotation / 90) % 4;
+  // Rotate array right by 'steps'
+  const rotated = arr.map((_, i) => arr[(i - steps + 4) % 4]);
+  // Map back to object
+  return {
+    top: rotated[0],
+    right: rotated[1],
+    bottom: rotated[2],
+    left: rotated[3]
+  };
 };
+
+// Helper function to get current connections for a piece
+const getConnections = (type: PipeType, rotation: Rotation): PipeConnections => {
+  return rotateConnections(PIPE_CONNECTIONS[type], rotation);
+};
+
+// Intended path for the puzzle (row, col)
+const INTENDED_PATH: [number, number][] = [
+  [0, 2], // start
+  [1, 2],
+  [2, 2],
+  [2, 3],
+  [2, 4],
+  [3, 4],
+  [4, 4], // end
+];
+
+// Pathfinding to check if there's a path from start to end
+const checkWin = (grid: PipePiece[][]) => {
+  // Check that the intended path is connected in order
+  for (let i = 0; i < INTENDED_PATH.length - 1; i++) {
+    const [r1, c1] = INTENDED_PATH[i];
+    const [r2, c2] = INTENDED_PATH[i + 1];
+    const pieceA = grid[r1][c1];
+    const pieceB = grid[r2][c2];
+    // Determine direction from A to B
+    const dr = r2 - r1;
+    const dc = c2 - c1;
+    let dirA: keyof PipeConnections, dirB: keyof PipeConnections;
+    if (dr === 1 && dc === 0) { dirA = 'bottom'; dirB = 'top'; }
+    else if (dr === -1 && dc === 0) { dirA = 'top'; dirB = 'bottom'; }
+    else if (dr === 0 && dc === 1) { dirA = 'right'; dirB = 'left'; }
+    else if (dr === 0 && dc === -1) { dirA = 'left'; dirB = 'right'; }
+    else { return false; }
+    const connsA = getConnections(pieceA.type, pieceA.rotation);
+    const connsB = getConnections(pieceB.type, pieceB.rotation);
+    if (!connsA[dirA] || !connsB[dirB]) return false;
+  }
+  // Also ensure that the start and end are correct types
+  const [startR, startC] = INTENDED_PATH[0];
+  const [endR, endC] = INTENDED_PATH[INTENDED_PATH.length - 1];
+  if (grid[startR][startC].type !== 'start' || grid[endR][endC].type !== 'end') return false;
+  return true;
+};
+
+// Fixed, hand-designed 5x5 board with a single correct path and distractors
+const FIXED_BOARD: PipePiece[][] = [
+  // Row 0
+  [
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'straight', rotation: 90 }, // distractor
+    { type: 'start', rotation: 0 }, // start (down)
+    { type: 'elbow', rotation: 270 }, // distractor
+    { type: 'elbow', rotation: 180 }, // distractor
+  ],
+  // Row 1
+  [
+    { type: 'elbow', rotation: 0 }, // distractor
+    { type: 'elbow', rotation: 0 }, // distractor
+    { type: 'straight', rotation: 0 }, // path (vertical)
+    { type: 'elbow', rotation: 90 }, // distractor
+    { type: 'elbow', rotation: 90 }, // distractor
+  ],
+  // Row 2
+  [
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'elbow', rotation: 90 }, // path (up to right)
+    { type: 'straight', rotation: 90 }, // path (horizontal)
+    { type: 'elbow', rotation: 180 }, // path (left to down)
+  ],
+  // Row 3
+  [
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'elbow', rotation: 180 }, // distractor
+    { type: 'straight', rotation: 0 }, // path (vertical)
+  ],
+  // Row 4
+  [
+    { type: 'elbow', rotation: 90 }, // distractor
+    { type: 'elbow', rotation: 90 }, // distractor
+    { type: 'elbow', rotation: 0 }, // distractor
+    { type: 'elbow', rotation: 0 }, // distractor
+    { type: 'end', rotation: 0 }, // end (up)
+  ],
+];
 
 // Styled components
 const GameContainer = styled.div`
@@ -80,52 +171,21 @@ const PipePiece = styled.div<{ rotation: number }>`
 
 const App: React.FC = () => {
   // Create a proper 5x5 grid with different pipe types
-  const [puzzle, setPuzzle] = useState<PipePiece[][]>(() => {
-    // Create a 5x5 grid with different pipe types
-    return Array(5).fill(null).map((_, rowIndex) => 
-      Array(5).fill(null).map((_, colIndex) => {
-        // Place start at top, end at bottom
-        if (rowIndex === 0 && colIndex === 2) {
-          return {
-            type: 'start',
-            rotation: 0,
-            connections: PIPE_CONNECTIONS.start
-          };
-        }
-        if (rowIndex === 4 && colIndex === 2) {
-          return {
-            type: 'end',
-            rotation: 0,
-            connections: PIPE_CONNECTIONS.end
-          };
-        }
-        // Randomly place other pipe types
-        const types: PipeType[] = ['straight', 'elbow', 'cross'];
-        const type = types[Math.floor(Math.random() * types.length)];
-        return {
-          type,
-          rotation: 0,
-          connections: PIPE_CONNECTIONS[type]
-        };
-      })
-    );
-  });
+  const [puzzle, setPuzzle] = useState<PipePiece[][]>(() => FIXED_BOARD.map(row => row.map(cell => ({ ...cell }))));
+
+  // Win state
+  const [hasWon, setHasWon] = useState(false);
 
   const rotatePiece = (row: number, col: number) => {
     setPuzzle(prev => {
-      // Create a deep copy of the puzzle
       const newPuzzle = prev.map(row => [...row]);
       const piece = { ...newPuzzle[row][col] };
-      
-      // Calculate new rotation
       const newRotation = ((piece.rotation + 90) % 360) as Rotation;
       piece.rotation = newRotation;
-      
-      // Update connections based on rotation
-      piece.connections = rotateConnections(piece.connections, 90);
-      
-      // Update the piece in the new puzzle
       newPuzzle[row][col] = piece;
+      setTimeout(() => {
+        setHasWon(checkWin(newPuzzle));
+      }, 0);
       return newPuzzle;
     });
   };
@@ -134,6 +194,7 @@ const App: React.FC = () => {
     <GameContainer>
       <h1>3D Printing Pipe Puzzle</h1>
       <p>Connect the filament from the printer nozzle to the print bed!</p>
+      {hasWon && <h2 style={{ color: '#4caf50' }}>🎉 You win! The printer is connected to the bed! 🎉</h2>}
       <Grid>
         {puzzle.map((row, rowIndex) =>
           row.map((piece, colIndex) => (
