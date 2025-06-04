@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import CluePage from './components/CluePage'
 import VictoryPage from './components/VictoryPage'
+import PipePuzzle from './components/PipePuzzle'
 import './styles/App.module.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/clue/:id" element={<CluePage />} />
           <Route path="/victory" element={<VictoryPage />} />
+          <Route path="/pipe-puzzle" element={<PipePuzzle />} />
         </Routes>
       </Router>
     </div>

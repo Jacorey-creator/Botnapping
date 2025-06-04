@@ -1,0 +1,59 @@
+.pipePuzzleContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  background: #2a2a2a;
+  padding: 16px;
+  border-radius: 4px;
+  margin: 2rem auto;
+  max-width: fit-content;
+}
+
+.pipePiece {
+  width: 60px;
+  height: 60px;
+  background: #3a3a3a;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-size: 24px;
+}
+
+.pipePiece:hover {
+  background: #4a4a4a;
+}
+
+.winMessage {
+  color: #4caf50;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* We'll add more styles as we integrate the puzzle functionality */ 
