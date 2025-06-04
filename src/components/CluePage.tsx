@@ -147,7 +147,7 @@ const clues: Record<string, Clue> = {
     type: 'media',
     title: 'Clue',
     items: [
-      { type: 'video', content: '', title: 'Temp' },
+      { type: 'video', content: '/clues/NeubertTurn.mp4', title: 'Neubert Turn' },
     ]
   }
   
